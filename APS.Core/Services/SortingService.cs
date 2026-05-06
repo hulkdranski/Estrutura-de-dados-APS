@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using System.Diagnostics;
 public class SortingService
 {
     public List<int> BubbleSort(List<int> list)
@@ -66,19 +66,19 @@ public class SortingService
     }
 
     public List<int> MergeSort(List<int> list)
-{
-    if (list.Count <= 1)
-        return list;
+    {
+        if (list.Count <= 1)
+            return list;
 
-    int middle = list.Count / 2;
+        int middle = list.Count / 2;
 
-    var left = list.GetRange(0, middle);
-    var right = list.GetRange(middle, list.Count - middle);
+        var left = list.GetRange(0, middle);
+        var right = list.GetRange(middle, list.Count - middle);
 
-    left = MergeSort(left);
-    right = MergeSort(right);
+        left = MergeSort(left);
+        right = MergeSort(right);
 
-    return Merge(left, right);
+        return Merge(left, right);
 }
 
     private List<int> Merge(List<int> left, List<int> right)
@@ -178,6 +178,36 @@ public class SortingService
                 right = mid - 1;
         }
 
-        return -1; // não encontrado
+        return -1; 
+    }
+
+    public SortResult MeasureSort(Func<List<int>, List<int>> sortFunction, List<int> list)
+    {
+        var copy = new List<int>(list);
+
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+
+        var sorted = sortFunction(copy);
+
+        sw.Stop();
+
+        return new SortResult
+        {
+            SortedList = sorted,
+            ElapsedMilliseconds = sw.ElapsedMilliseconds
+        };
+    }
+
+    public (int index, long time) MeasureBinarySearch(List<int> list, int target)
+    {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+
+        int result = BinarySearch(list, target);
+
+        sw.Stop();
+
+        return (result, sw.ElapsedMilliseconds);
     }
 }

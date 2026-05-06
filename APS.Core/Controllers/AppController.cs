@@ -48,4 +48,34 @@ public class AppController
     {
         return _sortingService.SelectionSort(list);
     }
+
+    public int SearchBinary(List<int> list, int target)
+    {
+        return _sortingService.BinarySearch(list, target);
+    }
+
+    public SortResult MeasureBubble(List<int> list)
+    {
+        return _sortingService.MeasureSort(_sortingService.BubbleSort, list);
+    }
+
+    public SortResult MeasureQuick(List<int> list)
+    {
+        return _sortingService.MeasureSort(_sortingService.QuickSort, list);
+    }
+
+    public SortResult MeasureMerge(List<int> list)
+    {
+        return _sortingService.MeasureSort(_sortingService.MergeSort, list);
+    }
+
+    public SortResult MeasureInsertion(List<int> list)
+    {
+        return _sortingService.MeasureSort(_sortingService.InsertionSort, list);
+    }
+
+    public SortResult MeasureSelection(List<int> list)
+    {
+        return _sortingService.MeasureSort(_sortingService.SelectionSort, list);
+    }
 }
